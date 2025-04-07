@@ -1,8 +1,5 @@
 
 
-/* modul graj = na podstawie klikniecia zamieniac graczy co klikniecie i umieszczac znak w dobrej kolumnie i puszczac render(), po czym sprawdzac czy gra jest wygrana czy tie 
-modul renderuj = renderuj nowe zaznaczenia
-wydarzenie  */
 
 
 const gameBoard = ( function(){

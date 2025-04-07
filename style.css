@@ -52,5 +52,173 @@
   #root, #__next {
     isolation: isolate;
   }
+  :root {
+    --darkblue: rgb(5, 5, 181);
+    --lightblue: rgb(40, 125, 171);
+    --darkback: rgba(0, 0, 0, 0.529);
+    --backgroundBlue: rgba(51, 51, 241, 0.49);
+  }
+  
+  body {
+    background-image: url("./test.jpg");
+    color: white;
+    font-family: "default";
+    overflow: hidden;
+    user-select: none;
+ }
+
+ @font-face {
+  font-family: "logo";
+  src: url(./Workbench/Workbench-Regular-VariableFont_BLED\,SCAN.ttf);
+ }
+
+ @font-face {
+  font-family: "default";
+  src: url("./Doto/Doto-VariableFont_ROND\,wght.ttf");
+ }
+
+ @font-face {
+  font-family: "xo";
+  src: url("./Rubik_Broken_Fax/RubikBrokenFax-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+ }
+
+ .page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+    .logoBlock {
+      display: flex;
+      justify-content: center;
+      background-color: var(--darkback);
+      z-index: -2;
+    }
 
   
+      #logo {
+        font-family: "logo";
+        font-size: 7rem;
+        font-weight: 100;
+      }
+.navbar{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 6rem;
+  font-size: 3rem;
+  padding-top: 1rem;
+  font-weight: bold;
+}
+
+.navbarLeft, .navbarRight {
+  position: absolute;
+  z-index: -1;
+}
+
+.navbarLeft{
+  bottom: 60px;
+  left: 240px;
+}
+
+.navbarRight{
+  right: 280px;
+  top: 72px;
+}
+
+.markerToggle, .restart {
+   background-color: var(--darkback);
+   color: var(--lightblue);
+   border-radius: 1rem;
+   border-style: none;
+   transition: all 0.4s;
+   cursor: pointer;
+}
+
+.markerToggle:hover, .restart:hover {
+  background-color: var(--backgroundBlue);
+}
+
+.game {
+  display: flex;
+  justify-content: center;
+}
+
+.gameBoard {
+  font-family: "xo";
+  justify-content: center;
+  margin-top: 1rem;
+  width: 60%;
+  height: 50%;
+  display: grid;
+  grid: repeat(3, 200px)/ repeat(3, 200px);
+ 
+}
+
+.gameCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13rem;
+  border: solid 2px var(--lightblue);
+  background: rgb(1,159,255);
+  background: radial-gradient(circle, rgb(1, 67, 111) 1%, rgba(0,0,0,1) 80%);
+  transition: all 0.4s;
+}
+
+.active {
+  background: var(--darkback);
+  margin: 2px;
+  cursor: pointer;
+}
+
+.gameCell.active.marked {
+  background-color: transparent;
+  cursor:alias;
+}
+
+.gameCell.active:hover{
+  background-color: var(--backgroundBlue);
+}
+
+.gameCell.active.marked:hover{
+  background-color: transparent;
+}
+
+.gameCell.active.marked.markX {
+ color:rgba(0, 0, 0, 0.6);
+}
+
+.gameCell.active.marked.markO {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.play {
+  margin-top: 1rem;
+  align-self: center;
+  height: 4rem;
+  width: 600px;
+  border-radius: 1rem;
+  font-size: 2rem;
+  background-color: var(--backgroundBlue);
+  border-style: none;
+  color: white;
+  transition: all 0.4s;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.play:hover {
+  background-color: var(--darkblue);
+}
+
+.footer {
+  margin-left: 10rem;
+  font-size: 20px;
+}
