@@ -3,9 +3,11 @@ const restartButton = document.getElementById("restartBtn");
 const scoreX = document.getElementById("scoreX");
 const scoreO = document.getElementById("scoreO");
 const scoreTie = document.getElementById("ties");
+const gameCellContainer = document.getElementById("gameCellContainer");
 const gameCells = document.querySelectorAll(".gameCell");
 const playButton = document.getElementById("playBtn");
 const changeMarkerPre = document.getElementById("changeMarkerPreword");
+const pixelArtButton = document.getElementById("showPixels");
 
 
 
@@ -206,5 +208,18 @@ const gameUI = (function(){
         
 
     }));
+
+    pixelArtButton.addEventListener("click", () => {
+        
+        if(pixelArtButton.classList.contains("opossumShowed")){
+            gameCellContainer.style.opacity = 1;
+            pixelArtButton.classList.remove("opossumShowed");
+        }
+        else {
+            gameCellContainer.style.opacity = 0;
+            pixelArtButton.classList.add("opossumShowed");
+        }
+        
+    });
 
 })();

@@ -241,3 +241,24 @@ a{
   color:rgb(255, 175, 255);
   font-size: 24px;
 }
+
+#showPixels {
+  border-radius: 7px;
+  border-color: rgba(0, 0, 255, 0.42);
+  background-color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+
+}
+
+#showPixels:hover {
+  background-color: white;
+}
+
+#showPixels.opossumShowed {
+  background-color: var(--lightblue);
+  color: white;
+}
+
+#showPixels.opossumShowed:hover {
+  background-color: var(--darkblue);
+}
