@@ -1,4 +1,11 @@
-
+const changeMarkerButton = document.getElementById("changeMarkerBtn");
+const restartButton = document.getElementById("restartBtn");
+const scoreX = document.getElementById("scoreX");
+const scoreO = document.getElementById("scoreO");
+const scoreTie = document.getElementById("ties");
+const gameCells = document.querySelectorAll(".gameCell");
+const playButton = document.getElementById("playBtn");
+const changeMarkerPre = document.getElementById("changeMarkerPreword");
 
 
 
@@ -18,14 +25,23 @@ const gameBoard = ( function(){
 
 const gameController = ( function(){
 
-    const player1 = createPlayer("mat", "O");
-    const player2 = createPlayer("pat", "X");
-    let currentPlayer = player1;
+    const playerO = createPlayer("O");
+    const playerX = createPlayer("X");
+    let currentPlayer = playerO; 
+
+    const Ties = tieManager();
+    const getTiesManager = () => Ties;
 
     const getCurrentPlayer = () => currentPlayer;
     const switchTurns = () => {
-        currentPlayer = currentPlayer === player1 ? player2 : player1;
+        currentPlayer = currentPlayer === playerO ? playerX : playerO;
+        console.log("gracz po zmianie  " + currentPlayer.marker);
     }
+    const restartPlayerPoints = () => {
+        playerO.restartPoints();
+        playerX.restartPoints();
+    }
+
 
     const checkState = () => {
         const winPatterns = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], //poziom
@@ -53,12 +69,137 @@ const gameController = ( function(){
                                                                     return false; */
     }
 
-    return {getCurrentPlayer, switchTurns, checkState};
+    const isDraw = () => {
+        return gameBoard.getBoard().every(cell => cell !== "") && !checkState();
+    }
+
+    return {getCurrentPlayer, switchTurns, checkState, isDraw, getTiesManager, restartPlayerPoints};
 })();
 
-function createPlayer(name, marker){
+function createPlayer(marker){
     let points = 0;
     const addPoint = () => points++;
-    const showPoints = () => console.log("Points: " + points );
-return {name, marker, addPoint, showPoints};
+    const showPoints = () => {
+        return points;
+    }
+    const restartPoints = () => {
+        points = 0;
+    }
+return {marker, addPoint, showPoints, restartPoints};
 }
+
+function tieManager(){
+    let tiesCount = 0;
+    const addTie = () => tiesCount++;
+    const resetTies = () => tiesCount = 0;
+    const getTies = () => tiesCount;
+    
+return {addTie, resetTies, getTies};
+}
+
+const gameUI = (function(){
+
+    const changeFirstMarkerUI = () => {
+        const current = gameController.getCurrentPlayer();
+
+        if(current.marker === "O"){
+            gameController.switchTurns();
+            changeMarkerButton.textContent = "1st Marker: X";
+        }
+        else if(current.marker === "X"){
+            gameController.switchTurns();
+            changeMarkerButton.textContent = "1st Marker: O";
+        }
+
+        console.log(current);
+    }
+
+    changeMarkerButton.addEventListener('click', () => {
+
+      changeFirstMarkerUI();
+
+    });
+
+    restartButton.addEventListener('click', () => {
+        changeMarkerButton.classList.remove("deactivate");
+        playButton.classList.remove("deactivate");
+        playButton.innerText = "Unleash the possum monstrum"
+        gameBoard.resetBoard();
+        gameController.getTiesManager().resetTies();
+        scoreTie.innerText = "Ties: 0";
+        scoreX.innerText = "X: 0";
+        scoreO.innerText = "O: 0";
+        gameCells.forEach(cell => {
+            cell.classList.remove("active", "marked");
+            cell.innerText = "";
+        })
+    });
+
+    playButton.addEventListener('click', () => {
+
+        changeMarkerButton.classList.add("deactivate");
+        changeMarkerPre.style.opacity = 0;
+        console.log("fiut");
+
+        gameCells.forEach(cell => {
+            cell.classList.add("active");
+            cell.classList.remove("marked");
+            cell.innerText = "";
+        })
+
+        playButton.classList.add("deactivate");
+        playButton.innerText = "Unleashed the possum monstrum"
+    });
+
+    gameCells.forEach(cell =>
+         cell.addEventListener("click", () => {
+            if(cell.classList.contains("marked") || !cell.classList.contains("active")) return;
+        
+        const index = parseInt(cell.dataset.id) - 1;
+        const currentPlayer = gameController.getCurrentPlayer();
+
+        gameBoard.placeMarker(index, currentPlayer.marker);
+
+        cell.textContent = currentPlayer.marker;
+        cell.classList.add("marked");
+
+        if(gameController.checkState()) {
+
+            console.log(currentPlayer.marker + " wins");
+
+            gameCells.forEach(cell => 
+                cell.classList.add("marked"));
+            playButton.classList.remove("deactivate");
+            playButton.innerText = "Unleash the possum monstrum";
+            gameBoard.resetBoard();
+            changeFirstMarkerUI();
+
+            currentPlayer.addPoint();
+            if(currentPlayer.marker === "X"){
+            scoreX.innerText = ("X: " + currentPlayer.showPoints());
+            }
+            else if(currentPlayer.marker === "O"){
+            scoreO.innerText = ("O: " + currentPlayer.showPoints());
+            }
+        }
+        else if(gameController.isDraw()){
+            gameController.getTiesManager().addTie();
+            scoreTie.innerText = "Ties: " + gameController.getTiesManager().getTies();
+
+            gameCells.forEach(cell =>
+                 cell.classList.add("marked"));
+            playButton.classList.remove("deactivate");
+            playButton.innerText = "Unleash the possum monstrum";
+            gameBoard.resetBoard(); 
+            gameController.restartPlayerPoints();
+            changeFirstMarkerUI();
+    }
+        else {
+            gameController.switchTurns();
+        }
+
+        
+
+    }));
+
+})();

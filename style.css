@@ -67,22 +67,12 @@
     user-select: none;
  }
 
- @font-face {
-  font-family: "logo";
-  src: url(./Workbench/Workbench-Regular-VariableFont_BLED\,SCAN.ttf);
- }
 
  @font-face {
   font-family: "default";
   src: url("./Doto/Doto-VariableFont_ROND\,wght.ttf");
  }
 
- @font-face {
-  font-family: "xo";
-  src: url("./Rubik_Broken_Fax/RubikBrokenFax-Regular.ttf");
-  font-weight: normal;
-  font-style: normal;
- }
 
  .page{
     display: flex;
@@ -99,9 +89,9 @@
 
   
       #logo {
-        font-family: "logo";
+        font-family: "default";
         font-size: 7rem;
-        font-weight: 100;
+        font-weight: 300;
       }
 .navbar{
   position: relative;
@@ -121,6 +111,7 @@
 .navbarLeft{
   bottom: 60px;
   left: 240px;
+  transition: all 0.4s;
 }
 
 .navbarRight{
@@ -137,6 +128,12 @@
    cursor: pointer;
 }
 
+.markerToggle.deactivate {
+  color: rgb(255, 255, 255);
+  background: none;
+  pointer-events: none;
+}
+
 .markerToggle:hover, .restart:hover {
   background-color: var(--backgroundBlue);
 }
@@ -147,7 +144,7 @@
 }
 
 .gameBoard {
-  font-family: "xo";
+  font-family: "default";
   justify-content: center;
   margin-top: 1rem;
   width: 60%;
@@ -218,7 +215,26 @@
   background-color: var(--darkblue);
 }
 
+.play.deactivate {
+  background: none;
+  pointer-events: none;
+}
+
 .footer {
-  margin-left: 10rem;
-  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  gap: 3rem;
+  margin-left: 3rem;
+  font-size: 18px;
+  color:rgb(255, 255, 255);
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.creator {
+  color:rgb(255, 175, 255);
+  font-size: 24px;
 }
