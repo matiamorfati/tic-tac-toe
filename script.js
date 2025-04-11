@@ -35,7 +35,6 @@ const gameController = ( function(){
     const getCurrentPlayer = () => currentPlayer;
     const switchTurns = () => {
         currentPlayer = currentPlayer === playerO ? playerX : playerO;
-        console.log("gracz po zmianie  " + currentPlayer.marker);
     }
     const restartPlayerPoints = () => {
         playerO.restartPoints();
@@ -111,7 +110,7 @@ const gameUI = (function(){
             changeMarkerButton.textContent = "1st Marker: O";
         }
 
-        console.log(current);
+        
     }
 
     changeMarkerButton.addEventListener('click', () => {
@@ -122,16 +121,23 @@ const gameUI = (function(){
 
     restartButton.addEventListener('click', () => {
         changeMarkerButton.classList.remove("deactivate");
+        changeMarkerPre.style.opacity = 1;
+        changeFirstMarkerUI();
+
         playButton.classList.remove("deactivate");
         playButton.innerText = "Unleash the possum monstrum"
-        gameBoard.resetBoard();
-        gameController.getTiesManager().resetTies();
+
         scoreTie.innerText = "Ties: 0";
         scoreX.innerText = "X: 0";
         scoreO.innerText = "O: 0";
+
         gameCells.forEach(cell => {
             cell.classList.remove("active", "marked");
             cell.innerText = "";
+
+        gameBoard.resetBoard();
+        gameController.getTiesManager().resetTies();   
+        gameController.restartPlayerPoints();
         })
     });
 
@@ -139,7 +145,6 @@ const gameUI = (function(){
 
         changeMarkerButton.classList.add("deactivate");
         changeMarkerPre.style.opacity = 0;
-        console.log("fiut");
 
         gameCells.forEach(cell => {
             cell.classList.add("active");
@@ -165,7 +170,7 @@ const gameUI = (function(){
 
         if(gameController.checkState()) {
 
-            console.log(currentPlayer.marker + " wins");
+            (currentPlayer.marker + " wins");
 
             gameCells.forEach(cell => 
                 cell.classList.add("marked"));
