@@ -275,18 +275,15 @@ a{
   }
 
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 1rem;
     font-size: 2rem;
   }
 
-  .board {
-    transform: scale(0.7); 
-  }
 
   .logoBlock #logo {
-    font-size: 4rem;
+    font-size: 2rem;
   }
 
   .play {
@@ -297,10 +294,10 @@ a{
 
   .gameBoard {
     width: 60vw;
-    max-width: 100%;
     aspect-ratio: 1;
-    grid: repeat(3, 125px)/ repeat(3, 125px);
+    grid: repeat(3, 6rem)/ repeat(3, 6rem);
     margin-bottom: 2rem;
+    flex-shrink: 0;
   }
 
   .gameCell {
@@ -316,25 +313,30 @@ a{
 
   .play {
   width: 50%;
+  margin-top: 3rem;
   }
 
   .footer {
     font-size: 0.8rem;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    
   }
 
   .creator {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 
   #showPixels{
     font-size: 1.3rem;
   }
 
-  /* Ukrywamy absolutnie pozycjonowane elementy */
  .navbarLeft, .navbarRight{
     opacity: 0;
     visibility: hidden;
-    pointer-events: none; /* żeby nie były klikalne */
+    pointer-events: none; /
   }
 }
